@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ZXing;
 
-public class QRScanner : MonoBehaviour
+public class QrScan: MonoBehaviour
 {
     WebCamTexture webcamTexture;
     string QrCode = string.Empty;
