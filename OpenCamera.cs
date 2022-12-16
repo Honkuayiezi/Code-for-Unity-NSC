@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhoneCam : MonoBehaviour
+public class OpenCamera : MonoBehaviour
 {
     private bool camAvailble;
     private WebCamTexture backCam;
