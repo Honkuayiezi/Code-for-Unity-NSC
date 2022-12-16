@@ -1,0 +1,41 @@
+using JetBrains.Annotations;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class cube : MonoBehaviour
+{
+    public GameObject _FX1;
+    public AudioClip _S1;
+    /*
+    private void OnCollisionEnter(Collision _chon)
+    {
+ 
+        if (_chon.gameObject.name == "Sphere")
+        {
+            Destroy(gameObject);
+        }
+        if(_chon.gameObject.name == "Capsule")
+        {
+            Destroy(_chon.gameObject);
+        }
+    }
+    */
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Capsule")
+        {
+            Destroy(other.gameObject);
+            //Instantiate(_FX1);
+            Instantiate(_FX1, transform.position, transform.rotation);
+            GetComponent<AudioSource>().PlayOneShot(_S1);
+        }
+        if (other.gameObject.name == "Sphere")
+        {
+            Destroy(other.gameObject);
+            //Instantiate(_FX1);
+            Instantiate(_FX1, transform.position, transform.rotation);
+        }
+
+    }
+}
