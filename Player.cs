@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : Character
 {
+    [SerializeField] private Transform camTransform;
+    [SerializeField] private float rotation_speed =5;
     private CharacterController controller;
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -33,6 +35,10 @@ public class Player : Character
         if (groundedPlayer && playerVelocity.y < 0) playerVelocity.y = 0;
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x,0,input.y);
+
+        move = move.x * camTransform.right.normalized + move.z * camTransform.forward.normalized;
+        move.y = 0;
+        
         controller.Move(move * Time.deltaTime * speed);
         if (move != Vector3.zero) {
             gameObject.transform.forward = move;
@@ -41,6 +47,12 @@ public class Player : Character
         else {
             Idle();
         }
+
+        float targetAngle = camTransform.eulerAngles.y;
+        Quaternion targetRotataion = Quaternion.Euler(0,targetAngle,0);
+        transform.rotation = Quaternion.Lerp(transform.rotation,targetRotataion,rotation_speed*Time.deltaTime);
+
+
 
     }
 
