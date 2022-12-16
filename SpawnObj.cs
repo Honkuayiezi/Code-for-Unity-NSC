@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class spawn : MonoBehaviour
+public class SpawnObj : MonoBehaviour
 {
     public GameObject _sphere;
     public GameObject _capsule;
