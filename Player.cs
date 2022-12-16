@@ -7,9 +7,11 @@ public class Player : Character
 {
     [SerializeField] private Transform camTransform;
     [SerializeField] private float rotation_speed =5;
+    [SerializeField] private float jumpHeight;
     private CharacterController controller;
     private PlayerInput playerInput;
     private InputAction moveAction;
+    private InputAction jumpAction;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -24,6 +26,7 @@ public class Player : Character
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
+        jumpAction = playerInput.actions["Jump"];
     }
 
     private void Update() {
@@ -38,7 +41,7 @@ public class Player : Character
 
         move = move.x * camTransform.right.normalized + move.z * camTransform.forward.normalized;
         move.y = 0;
-        
+
         controller.Move(move * Time.deltaTime * speed);
         if (move != Vector3.zero) {
             gameObject.transform.forward = move;
@@ -47,12 +50,14 @@ public class Player : Character
         else {
             Idle();
         }
+        if (groundedPlayer && jumpAction.triggered) Jump();
 
         float targetAngle = camTransform.eulerAngles.y;
         Quaternion targetRotataion = Quaternion.Euler(0,targetAngle,0);
         transform.rotation = Quaternion.Lerp(transform.rotation,targetRotataion,rotation_speed*Time.deltaTime);
 
-
+        playerVelocity.y -= gravity * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 
     }
 
@@ -62,5 +67,9 @@ public class Player : Character
     private void Run() {
         anim.SetFloat("normal_speed",1,0.1f,Time.deltaTime);
 
+    }
+    private void Jump() {
+        anim.SetTrigger("jump");
+        playerVelocity.y += Mathf.Sqrt(jumpHeight * gravity);
     }
 }
