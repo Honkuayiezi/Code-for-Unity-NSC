@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cube : MonoBehaviour
+public class HitObjDestroy : MonoBehaviour
 {
     public GameObject _FX1;
     public AudioClip _S1;
